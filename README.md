@@ -1,2 +1,2 @@
 # imgSlider
-https://cttc-cttc.github.io/imgSlider/imageSlider.html
+https://cttc-cttc.github.io/imgSlider/imageSlide.html
