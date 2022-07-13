@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이미지 슬라이드</title>
+<style>
+	h2{
+		text-align: center;
+	}
+	.out{
+		margin-top: 3em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.imgArea{
+		width: 50em;
+		height: 30em;
+		overflow: hidden;
+		border: solid thin;
+		position: relative;
+	}
+	.container{
+		width: 800%;
+		position: absolute;
+	}
+	img{
+		width: 50em;
+		float: left;
+	}
+	.left, .right{
+		width: 2em;
+		height: 2em;
+		margin: 0 2em;
+		border: none;
+		border-radius: 3em;
+		background-color: #ddd;
+		font-size: 2em;
+		cursor: pointer;
+	}
+	#btnContainer{
+		display: flex;
+		background-color: #ccc;
+		border-radius: 3em;
+		border: none;
+		padding: 0.3em 0.7em;
+	}
+	.btnBottom{
+		border: none;
+		border-radius: 3em;
+		background-color: #aaa;
+		width: 1.5em;
+		height: 1.5em;
+		margin: 0.5em;
+	}
+	.btnBottom:hover{
+		cursor: pointer;
+		background-color: #eee;
+	}
+	.border{
+		border: solid #e39a3b;
+		background-color: #eee;
+	}
+</style>
+</head>
+<body>
+	<h2>커여운 동물짤</h2>
+	<div class="out">
+		<button class="left">&lang;</button>
+		<div class="imgArea">
+			<div class="container" style="left: -50em;">
+				<img src="./images/img6.jpg">
+				<img src="./images/img1.jpg">
+				<img src="./images/img2.jpg">
+				<img src="./images/img3.jpg">
+				<img src="./images/img4.jpg">
+				<img src="./images/img5.jpg">
+				<img src="./images/img6.jpg">
+				<img src="./images/img1.jpg">
+			</div>
+		</div>
+		<button class="right">&rang;</button>
+	</div>
+	<div class="out">
+		<div id="btnContainer">
+			<button class="btnBottom border" id="navi1" value="1"></button>
+			<button class="btnBottom" id="navi2" value="2"></button>
+			<button class="btnBottom" id="navi3" value="3"></button>
+			<button class="btnBottom" id="navi4" value="4"></button>
+			<button class="btnBottom" id="navi5" value="5"></button>
+			<button class="btnBottom" id="navi6" value="6"></button>
+		</div>
+	</div>
+	
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	// 무한 이미지 슬라이드
+	// 사용 이미지 6장
+	// 앞뒤 추가 이미지 1장씩
+	// 이미지 인덱스 번호 : 0~7번
+	let imgIdx = 1;
+	
+	$(document).ready(function() {
+		$('button.left').click(function() {
+			$('button').attr('disabled', 'disabled');
+			imgIdx--;
+			move();
+		});
+		$('button.right').click(function() {
+			$('button').attr('disabled', 'disabled');
+			imgIdx++;
+			move();
+		});
+		
+		$('.btnBottom').click(function() {
+			imgIdx = $(this).val();
+			move();
+		});
+	});
+	
+	function move() {
+		$('.container').stop().animate({
+			left: (imgIdx * -50)+'em'
+		}, function() { // 애니메이션 끝난 후 처리
+			if(imgIdx == 0) {
+				imgIdx = 6;
+				$('.container').css('left',(imgIdx * -50)+'em');
+			} else if(imgIdx == 7) {
+				imgIdx = 1;
+				$('.container').css('left',(imgIdx * -50)+'em');
+			}
+			$('button').removeAttr('disabled');
+			
+			setNavi();
+		});
+	}
+	
+	function setNavi() {
+		for(let i=1; i<=6; i++){
+			$('#navi'+i).removeClass('border');
+		}
+		$('#navi'+imgIdx).addClass('border');
+	}
+</script>
+</body>
+</html>
